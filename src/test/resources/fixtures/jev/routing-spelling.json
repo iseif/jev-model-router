@@ -1,0 +1,20 @@
+{
+  "model": "jev-1.13.0",
+  "answers": {
+    "complexity": {
+      "type": "choice",
+      "choice": "ROUTINE",
+      "confidence": 1.0,
+      "probabilities": {
+        "ROUTINE": 1.0,
+        "STANDARD": 0.0,
+        "COMPLEX": 0.0,
+        "DEMANDING": 0.0
+      }
+    }
+  },
+  "usage": {
+    "input_tokens": 653,
+    "output_tokens": 57
+  }
+}

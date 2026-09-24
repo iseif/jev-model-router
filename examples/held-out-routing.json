@@ -1,0 +1,44 @@
+{
+  "frozenAtUtc": "2026-09-24T06:43:23.478997+00:00",
+  "purpose": "New diagnostic prompts fixed after rubric tuning and before observing their responses. Intended categories express author policy, not measured model adequacy or objective ground truth.",
+  "protocol": "One call per new prompt, no retries or post-result tuning. A previously used spelling prompt is the separate warm-up. Only prompt text is sent to /route; intended categories and rationales are not sent to Jev.",
+  "rubricSha256": {
+    "src/main/java/dev/iseif/jevmodelrouter/model/TaskComplexity.java": "a6892381d3adee9084fb404812e2a3ee3cc4b1c9f315d42e55e0db844d5808df",
+    "src/main/resources/prompts/routing-instructions.txt": "e05e206ab3b47aff97d2077c1b2c6b49808772cd09971a3b52c53018258ec251"
+  },
+  "cases": [
+    {
+      "id": "lock-free-queue",
+      "intendedCategories": [
+        "DEMANDING"
+      ],
+      "rationale": "A queue implementation plus linearizability and lock-freedom arguments is substantially harder than repairing a familiar lock-ordering bug.",
+      "prompt": "Implement an unbounded multi-producer, multi-consumer FIFO queue in Java 25 without locks or synchronized, using standard JDK atomics or VarHandle operations and assuming garbage collection. Give enqueue and dequeue pseudocode. Identify the linearization points, handle empty-queue races and a producer paused after linking a node, and argue why arbitrary thread suspension cannot prevent the remaining threads from making progress. Distinguish the safety argument from the progress guarantee."
+    },
+    {
+      "id": "arm-visibility",
+      "intendedCategories": [
+        "COMPLEX"
+      ],
+      "rationale": "Concrete evidence and an established Java Memory Model analysis make this a bounded diagnosis, despite the architecture-specific symptom report.",
+      "prompt": "Two Java threads share plain fields int payload = 0 and boolean ready = false. The writer assigns payload = 42 and then ready = true. The reader spins until ready is true and then reads payload. A test report says this works on x86 but sometimes hangs or reads zero on ARM. Analyze what the Java Memory Model permits on either processor, explain why that report is not a correctness guarantee, and show the smallest Java change that establishes the required happens-before relationship. State whether that change is sufficient if a writer reuses the same fields for repeated messages."
+    },
+    {
+      "id": "online-scheduling-bound",
+      "intendedCategories": [
+        "DEMANDING"
+      ],
+      "rationale": "Requires an algorithm, an argument covering every input, and an adversarial lower bound across all deterministic algorithms; it is unrelated to distributed-system design.",
+      "prompt": "An online scheduler must assign each arriving job irrevocably to one of two identical processors before the next job arrives. Job durations are positive and revealed at arrival; future jobs are unknown. Determine the best possible worst-case ratio between the final maximum load of a deterministic online scheduler and that of an optimal scheduler that knows the full sequence. Give an algorithm, establish an upper bound for every arrival sequence, and construct an adversarial sequence that rules out a better ratio for any deterministic algorithm."
+    },
+    {
+      "id": "order-totals-boundary",
+      "intendedCategories": [
+        "STANDARD",
+        "COMPLEX"
+      ],
+      "rationale": "A familiar small function has several explicit edge cases. Either neighboring category is acceptable under the policy; this ambiguity is declared before evaluation.",
+      "prompt": "Implement a Java function that groups a supplied list of orders by customer ID and returns each customer total as BigDecimal. Preserve insertion order of customers, skip cancelled orders, return an empty result for an empty list, and reject null orders or amounts. Compare the readability of a stream implementation and a simple loop, and give three edge-case tests."
+    }
+  ]
+}

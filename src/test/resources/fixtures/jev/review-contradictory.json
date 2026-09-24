@@ -1,0 +1,28 @@
+{
+  "model": "jev-1.13.0",
+  "answers": {
+    "grounded": {
+      "type": "noul",
+      "noul": 0.01
+    },
+    "completeness": {
+      "type": "score",
+      "score": 0.75,
+      "confidence": 0.46,
+      "legend": {
+        "0": "The answer does not address the question, or omits the information needed to respond to it.",
+        "1": "The answer addresses part of the question but omits a requested detail or a necessary qualification from the reference.",
+        "2": "The answer addresses every part that the reference can resolve, including necessary qualifications; it identifies any requested facts the reference does not supply."
+      },
+      "probabilities": {
+        "0": 0.3,
+        "1": 0.65,
+        "2": 0.05
+      }
+    }
+  },
+  "usage": {
+    "input_tokens": 692,
+    "output_tokens": 39
+  }
+}
